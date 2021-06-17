@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void retrievePDF(View view) {
-        startActivity(new Intent(getApplicationContext(),RetrievePDF.class));
+        startActivity(new Intent(getApplicationContext(), RetrievePDF.class));
+    }
+
+    public void renderPDF(View view) {
+        startActivity(new Intent(getApplicationContext(), render_pdf.class));
     }
 }
