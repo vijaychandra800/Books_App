@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,14 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +49,10 @@ public class RetrievePDF extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 putPDF putPDF = uploadedPDF.get(i);
-                Intent intent = new Intent(RetrievePDF.this, render_pdf.class);
-                intent.setType("application/pdf");
-                intent.setData(Uri.parse(putPDF.getUrl()));
+
+                Intent intent = new Intent(RetrievePDF.this, render_pdf.getInstance(putPDF.url).getClass());
+                /*intent.setType("application/pdf");
+                intent.setData(Uri.parse(putPDF.getUrl()));*/
                 startActivity(intent);
             }
         });

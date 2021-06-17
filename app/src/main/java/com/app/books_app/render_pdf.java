@@ -3,6 +3,7 @@ package com.app.books_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,15 @@ public class render_pdf extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private PDFView pdfView;
+    public static String url;
+
+    public static render_pdf getInstance(String pdfUrl){
+        url = pdfUrl;
+        return new render_pdf();
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +44,26 @@ public class render_pdf extends AppCompatActivity {
 
         pdfView = findViewById(R.id.pdfView);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
-        databaseReference = firebaseDatabase.getReference("url");
-        initializePDFView();
+        //firebaseDatabase = FirebaseDatabase.getInstance();
+        //databaseReference = firebaseDatabase.getReference("url");
+        new RetrivedPdffromFirebase().execute(url);
     }
 
 
-    private void initializePDFView() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String pdfUrl = snapshot.getValue(String.class);
-
-                new RetrivedPdffromFirebase().execute(pdfUrl);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(render_pdf.this, "Fail to get PDF url.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     class RetrivedPdffromFirebase extends AsyncTask<String, Void, InputStream> {
+
+        ProgressDialog progressDialog;
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(render_pdf.this);
+            progressDialog.setTitle("Loading");
+            progressDialog.setMessage("Please Wait...");
+            progressDialog.setCanceledOnTouchOutside(true);
+            progressDialog.show();
+
+        }
+
         @Override
         protected InputStream doInBackground(String... strings) {
             InputStream pdfStream = null;
@@ -81,6 +86,7 @@ public class render_pdf extends AppCompatActivity {
         @Override
         protected void onPostExecute(InputStream inputStream) {
             pdfView.fromStream(inputStream).load();
+            progressDialog.dismiss();
         }
     }
 }
