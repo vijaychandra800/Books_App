@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "462309857623",
+    "firebase_url": "https://mobile-app-1-2fbbd-default-rtdb.firebaseio.com",
     "project_id": "mobile-app-1-2fbbd",
     "storage_bucket": "mobile-app-1-2fbbd.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "462309857623-q6tpmu14cjqrqm7o1ikf55vrl19r2up4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.books_app",
+            "certificate_hash": "7b9280e69809ae21209a348c75d35db5bb65404d"
+          }
+        },
         {
           "client_id": "462309857623-7v97bvh4b5nosvsc6jvmvgb5tjh1b0mj.apps.googleusercontent.com",
           "client_type": 3
