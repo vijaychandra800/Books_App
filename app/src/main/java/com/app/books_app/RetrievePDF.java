@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class RetrievePDF extends AppCompatActivity {
 
     ListView listView;
     DatabaseReference databaseReference;
-    List<putPDF> uploadedPDF;
+    ArrayList<putPDF> uploadedPDF;
     private PDFView pdfView;
 
     @Override
@@ -45,17 +48,16 @@ public class RetrievePDF extends AppCompatActivity {
 
         retrievePdfFiles();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 putPDF putPDF = uploadedPDF.get(i);
-
                 Intent intent = new Intent(RetrievePDF.this, render_pdf.getInstance(putPDF.url).getClass());
-                /*intent.setType("application/pdf");
-                intent.setData(Uri.parse(putPDF.getUrl()));*/
+                *//*intent.setType("application/pdf");
+                intent.setData(Uri.parse(putPDF.getUrl()));*//*
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void retrievePdfFiles() {
@@ -79,20 +81,22 @@ public class RetrievePDF extends AppCompatActivity {
                 }
 
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, uploadName){
+               /* ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, uploadName){
                     @NonNull
                     @Override
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
-                        TextView textView = (TextView) view.findViewById(android.R.id.text1);
-
-                        textView.setTextColor(Color.BLACK);
-                        textView.setTextSize(20);
+                        ImageView imageView = findViewById(R.id.image_view);
+                        TextView textView = findViewById(R.id.custom_list_text);
+                        //textView.setTextColor(Color.BLACK);
+                        //textView.setTextSize(20);
                         return view;
-                    }
-                };
+                    }*/
 
-                listView.setAdapter(arrayAdapter);
+                MyListAdapter myListAdapter = new MyListAdapter(RetrievePDF.this, uploadedPDF);
+
+                listView.setAdapter(myListAdapter);
+
             }
 
             @Override

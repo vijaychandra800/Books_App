@@ -3,6 +3,7 @@ package com.app.books_app;
 public class putPDF {
     public String name;
     public String url;
+    int image;
 
 
     public putPDF(){
@@ -12,6 +13,10 @@ public class putPDF {
     public putPDF(String name, String url){
         this.name = name;
         this.url = url;
+    }
+
+    public int getImage() {
+        return image;
     }
 
     public String getName() {
